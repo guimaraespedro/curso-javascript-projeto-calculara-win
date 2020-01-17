@@ -1,6 +1,6 @@
 class CalcControler {
   constructor() {
-    this._operation = [];
+    this._operation = [0];
     this._lastOperator = "";
     this._display = document.querySelector("#display");
     this.initiateButtonEvents();
@@ -147,7 +147,13 @@ class CalcControler {
   }
 
   getResult() {
-    return eval(this._operation.join(""));
+    return eval(this._operation.join(" "));
+  }
+
+  changeLastNumberValue(){
+    this.setLastOperation(-this.getLastNumber());
+    console.log(this._operation);
+    this.setLastNumberToDisplay();
   }
 
   executeButton(value) {
@@ -178,6 +184,9 @@ class CalcControler {
       case "%":
         this.checkOperator("%");
         this.addOperation("%");
+        break;
+      case "±":
+        this.changeLastNumberValue();
         break;
       case ",":
         break;
