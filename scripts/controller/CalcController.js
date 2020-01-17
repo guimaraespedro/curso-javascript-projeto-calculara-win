@@ -75,7 +75,11 @@ class CalcControler {
   }
 
   setLastOperation(value) {
-    this._operation[this._operation.length - 1] = value;
+    if(isNaN(value)){
+      if(this._operation.length>0){
+        return this._operation[this._operation.length-1] = this.getLastItem(false).toString() + '.'
+      }
+    }else return this._operation[this._operation.length - 1] = value;
   }
 
   addOperation(value) {
@@ -156,6 +160,11 @@ class CalcControler {
     this.setLastNumberToDisplay();
   }
 
+  addDot(){
+    this._operation.length>0?this.setLastOperation('.') : this.setLastOperation('0.');
+    this.setLastNumberToDisplay();
+  }
+
   executeButton(value) {
     switch (value) {
       case "CE":
@@ -189,6 +198,7 @@ class CalcControler {
         this.changeLastNumberValue();
         break;
       case ",":
+        this.addDot();
         break;
       case "0":
       case "1":
