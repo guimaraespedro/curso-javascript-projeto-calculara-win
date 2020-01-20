@@ -8,7 +8,7 @@ class CalcControler {
   }
 
   clearAllEntries() {
-    this._operation = [];
+    this._operation = [0];
     this._lastOperator = "";
     this.setLastNumberToDisplay();
   }
@@ -77,7 +77,7 @@ class CalcControler {
   setLastOperation(value) {
     if(isNaN(value)){
       if(this._operation.length>0){
-        return this._operation[this._operation.length-1] = this.getLastItem(false).toString() + '.'
+        return this._operation[this._operation.length-1] = this.getLastItem(false).toString() + '.';
       }
     }else return this._operation[this._operation.length - 1] = value;
   }
@@ -161,7 +161,11 @@ class CalcControler {
   }
 
   addDot(){
-    this._operation.length>0?this.setLastOperation('.') : this.setLastOperation('0.');
+      if(isNaN(this.getLastOperation())){
+        if(this.isOperator(this.getLastOperation())){
+          this._operation.push('0.')
+        }else this.setLastOperation('0.');
+      }else this.setLastOperation('.')
     this.setLastNumberToDisplay();
   }
 
